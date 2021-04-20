@@ -13,37 +13,44 @@ namespace ReversedPolishNotation
         {
             expression = expression.Replace(" ", "");
             List<object> parsedLine = Parse(expression);
-            return " ";
-        }
+            if (!CheckLine(parsedLine))//выбрасывать ошибку
+            {
+                throw new Exception("некорректная строка");
+            }
+            Stack<object> reversedLine = GetReversedLine(parsedLine);
+            return "";
+        } 
         
         private List<object> Parse(string expression)
         {
             List<object> parsedLine = new List<object>();
-            string operands = "+-*/^()";
-            
-            string tempNum = "";
+
+            string tempNum = ""; 
             for (int i = 0; i < expression.Length; i++)
             {
-                if (operands.Contains(expression[i]))
+                if ("+-*/".Contains(expression[i]))
                 {
-                    if (tempNum != "")
-                    {
-                        double number = double.Parse(tempNum, CultureInfo.InvariantCulture);
-                        parsedLine.Add(number);
-                        tempNum = "";
-                    }
-                    parsedLine.Add(expression[i]);
-
+                    parsedLine = ParseNumbers(ref tempNum, parsedLine);
+                    parsedLine.Add(ChooseOperation(expression[i]));
+                }
+                else if ("()".Contains(expression[i]))
+                {
+                    parsedLine = ParseNumbers(ref tempNum, parsedLine);
+                    parsedLine.Add(ChooseBracket(expression[i]));
                 }
                 else if (IsNumbers(expression[i]) || (".,".Contains(expression[i]) && IsNumbers(expression[i - 1]) && IsNumbers(expression[i + 1])))
                 {
                     tempNum += expression[i].ToString();
                 }
-
             }
+            parsedLine = ParseNumbers(ref tempNum, parsedLine);
+            return parsedLine;
+        }
+        private List<object> ParseNumbers (ref string tempNum, List<object> parsedLine)
+        {
             if (tempNum != "")
             {
-                double number = double.Parse(tempNum, CultureInfo.InvariantCulture);
+                double number = double.Parse(tempNum, CultureInfo.InvariantCulture); //7,5 => 75  7.5 => 7.5
                 parsedLine.Add(number);
                 tempNum = "";
             }
@@ -53,9 +60,43 @@ namespace ReversedPolishNotation
         {         
             return (sym >= '0' && sym <= '9');
         }
-        private bool CheckLine (List<object> parsedLine)
+        private Operation ChooseOperation(char op)
         {
-            int countOperands = 0, countBracket = 0, countNumbers = 0;
+            Operation operation = null;
+            switch (op)
+            {
+                case ('+'):
+                    operation = new Plus();
+                    break;
+                case ('-'):
+                    operation = new Minus();
+                    break;
+                case ('*'):
+                    operation = new Mult();
+                    break;
+                case ('/'):
+                    operation = new Div();
+                    break;
+            }
+            return operation;
+        }
+        private Bracket ChooseBracket(char br)
+        {
+            Bracket bracket = null;
+            switch (br)
+            {
+                case ('('):
+                    bracket = new OpenBracket();
+                    break;
+                case (')'):
+                    bracket = new CloseBracket();
+                    break;
+            }
+            return bracket;
+        }
+        private bool CheckLine (List<object> parsedLine) 
+        {
+            int countOperation = 0, countBracket = 0, countNumbers = 0;
             foreach (var symbol in parsedLine)
             {
 
@@ -65,15 +106,67 @@ namespace ReversedPolishNotation
                 }
                 else
                 {
-                    string sym = symbol.ToString();
-                    if (sym == "(") countBracket += 1;
-                    else if (sym == ")") countBracket -= 1;
-                    else if ("-+*/^".Contains(symbol.ToString())) countOperands += 1;
-
+                    if (symbol is OpenBracket) countBracket += 1;
+                    else if (symbol is CloseBracket ) countBracket -= 1;
+                    else if (symbol is Operation) countOperation += 1;
                 }
-
             }
-            return (countBracket == 0 && countNumbers - countOperands == 2);
+            return (countBracket == 0 && countNumbers - countOperation == 1);
+        } 
+        private Stack<object> GetReversedLine (List<object> parsedLine)
+        {
+            var outputStack = new Stack<object>();
+            var operationsStack= new Stack<object>();
+            int numberOfSymbol = 0;
+            while (numberOfSymbol < parsedLine.Count())
+            {
+                if (parsedLine[numberOfSymbol] is double)
+                {
+                    outputStack.Push(parsedLine[numberOfSymbol]);
+                    numberOfSymbol++;                     
+                }
+                else if (parsedLine[numberOfSymbol] is Bracket)
+                {
+                    if (parsedLine[numberOfSymbol] is OpenBracket)
+                    {
+                        operationsStack.Push(parsedLine[numberOfSymbol]);
+                        numberOfSymbol++;
+                    }
+                    else if (parsedLine[numberOfSymbol] is CloseBracket)
+                    {
+                        if (operationsStack.Peek() is OpenBracket)
+                        {
+                            operationsStack.Pop();
+                            numberOfSymbol++;
+                        }
+                        else 
+                        {
+                            outputStack.Push(operationsStack.Pop());
+                        }
+                    }
+                }
+                else if (parsedLine[numberOfSymbol] is Operation operation)
+                {
+                    if (operationsStack.Count == 0 || (operationsStack.Peek() is OpenBracket) ||
+                       (operationsStack.Peek() as Operation).Prior > operation.Prior)
+                    {
+                        operationsStack.Push(operation);
+                        numberOfSymbol++;
+                    }
+                    else
+                    {
+                        outputStack.Push(operationsStack.Pop());
+                        operationsStack.Push(operation);
+                        numberOfSymbol++;
+                    }
+                }
+                continue; //сделать работу с аргумнтом
+            }
+            while (operationsStack.Count != 0)
+            {
+                outputStack.Push(operationsStack.Pop());
+            }
+            return outputStack;
         }
     }
 }
