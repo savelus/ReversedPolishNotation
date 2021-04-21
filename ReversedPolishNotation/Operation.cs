@@ -12,6 +12,8 @@ namespace ReversedPolishNotation
         public abstract int CountParams { get; }
         public abstract double Calculate(double[] @params);
         public abstract int Prior { get; }
+        public override string ToString() { return Name; }
+
     }
     public class Plus : Operation
     {

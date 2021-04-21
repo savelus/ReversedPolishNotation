@@ -17,7 +17,8 @@ namespace ReversedPolishNotation
             {
                 throw new Exception("некорректная строка");
             }
-            Stack<object> reversedLine = GetReversedLine(parsedLine);
+            object[] reversedLine = GetReversedLine(parsedLine);
+            string n = StringReversedLine(reversedLine);
             return "";
         } 
         
@@ -113,7 +114,7 @@ namespace ReversedPolishNotation
             }
             return (countBracket == 0 && countNumbers - countOperation == 1);
         } 
-        private Stack<object> GetReversedLine (List<object> parsedLine)
+        private object[] GetReversedLine (List<object> parsedLine)
         {
             var outputStack = new Stack<object>();
             var operationsStack= new Stack<object>();
@@ -166,7 +167,20 @@ namespace ReversedPolishNotation
             {
                 outputStack.Push(operationsStack.Pop());
             }
-            return outputStack;
+            object[] outputArray = outputStack.ToArray();
+            Array.Reverse(outputArray);
+            return outputArray;
+        }
+        private string StringReversedLine (object[] reversedLine)
+        {
+            int countSymbolinStack = reversedLine.Length;
+            StringBuilder @string = new StringBuilder();
+            foreach (var element in reversedLine)
+            {
+                @string.Append(element.ToString());
+            }
+            return @string.ToString();
+
         }
     }
 }
