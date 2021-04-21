@@ -39,6 +39,10 @@ namespace ReversedPolishNotation
                 {
                     tempNum += expression[i].ToString();
                 }
+                else if (char.IsLetter(expression[i]))
+                {
+                    parsedLine.Add(new Argument());
+                }
             }
             parsedLine = ParseNumbers(ref tempNum, parsedLine);
             return parsedLine;
@@ -97,7 +101,7 @@ namespace ReversedPolishNotation
             foreach (var symbol in parsedLine)
             {
 
-                if (symbol is double)
+                if (symbol is double || symbol is Argument)
                 {
                     countNumbers += 1;
                 }
@@ -120,7 +124,7 @@ namespace ReversedPolishNotation
             int numberOfSymbol = 0;
             while (numberOfSymbol < parsedLine.Count())
             {
-                if (parsedLine[numberOfSymbol] is double)
+                if (parsedLine[numberOfSymbol] is double || parsedLine[numberOfSymbol] is Argument)
                 {
                     outputStack.Push(parsedLine[numberOfSymbol]);
                     numberOfSymbol++;                     
@@ -160,7 +164,6 @@ namespace ReversedPolishNotation
                         numberOfSymbol++;
                     }
                 }
-                continue; //сделать работу с аргумнтом
             }
             while (operationsStack.Count != 0)
             {
@@ -181,5 +184,6 @@ namespace ReversedPolishNotation
             return @string.ToString();
 
         }
+
     }
 }
