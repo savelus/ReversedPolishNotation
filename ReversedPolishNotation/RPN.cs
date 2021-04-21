@@ -13,13 +13,9 @@ namespace ReversedPolishNotation
         {
             expression = expression.Replace(" ", "");
             List<object> parsedLine = Parse(expression);
-            if (!CheckLine(parsedLine))//выбрасывать ошибку
-            {
-                throw new Exception("некорректная строка");
-            }
-            object[] reversedLine = GetReversedLine(parsedLine);
-            string n = StringReversedLine(reversedLine);
-            return "";
+            CheckLine(parsedLine);//выбрасывать ошибку
+            var reversedLine = GetReversedLine(parsedLine);
+            return StringReversedLine(reversedLine.ToArray());
         } 
         
         private List<object> Parse(string expression)
@@ -95,7 +91,7 @@ namespace ReversedPolishNotation
             }
             return bracket;
         }
-        private bool CheckLine (List<object> parsedLine) 
+        private void CheckLine (List<object> parsedLine) 
         {
             int countOperation = 0, countBracket = 0, countNumbers = 0;
             foreach (var symbol in parsedLine)
@@ -112,9 +108,12 @@ namespace ReversedPolishNotation
                     else if (symbol is Operation) countOperation += 1;
                 }
             }
-            return (countBracket == 0 && countNumbers - countOperation == 1);
+            if (!(countBracket == 0 && countNumbers - countOperation == 1))
+            {
+                throw new Exception("некорректная строка");
+            }
         } 
-        private object[] GetReversedLine (List<object> parsedLine)
+        private Stack<object> GetReversedLine (List<object> parsedLine)
         {
             var outputStack = new Stack<object>();
             var operationsStack= new Stack<object>();
@@ -167,17 +166,17 @@ namespace ReversedPolishNotation
             {
                 outputStack.Push(operationsStack.Pop());
             }
-            object[] outputArray = outputStack.ToArray();
-            Array.Reverse(outputArray);
-            return outputArray;
+            return outputStack;
         }
         private string StringReversedLine (object[] reversedLine)
         {
+            Array.Reverse(reversedLine);
             int countSymbolinStack = reversedLine.Length;
             StringBuilder @string = new StringBuilder();
             foreach (var element in reversedLine)
             {
                 @string.Append(element.ToString());
+                @string.Append(" ");
             }
             return @string.ToString();
 

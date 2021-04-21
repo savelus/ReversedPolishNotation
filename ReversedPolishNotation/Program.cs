@@ -15,6 +15,7 @@ namespace ReversedPolishNotation
             double answer = 0;
             var rpn = new RPN();
             string output = rpn.Reverse(expression, ref answer);
+            Console.WriteLine(output);
             Console.Read();
 
         }
