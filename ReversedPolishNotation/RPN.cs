@@ -13,7 +13,7 @@ namespace ReversedPolishNotation
         {
             expression = expression.Replace(" ", "");
             List<object> parsedLine = Parse(expression);
-            CheckLine(parsedLine);//выбрасывать ошибку
+            CheckLine(parsedLine);
             var reversedLine = GetReversedLine(parsedLine, out strRPN);
             return reversedLine;
         } 
@@ -170,15 +170,6 @@ namespace ReversedPolishNotation
             strRPN = StringReversedLine(reverseStack.ToArray());
             return reverseStack;
         }
-        /* private Stack<object> GetStackforCalculation(Stack<object> reverseStack)
-         {
-             Stack<object> stackForCalculation = new Stack<object>();
-             while (reverseStack.Count != 0)
-             {
-                 stackForCalculation.Push(reverseStack.Pop());
-             }
-             return stackForCalculation;
-         }*/
         private string StringReversedLine (object[] reversedLine)
         {
             Array.Reverse(reversedLine);

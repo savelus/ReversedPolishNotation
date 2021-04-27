@@ -25,13 +25,13 @@ namespace ReversedPolishNotation
         {
 
             var answerDictionary = new Dictionary<double, double>();
-            if (Step == 0 || (Start + Step > End))
+            if (Step == 0)
             {
                 answerDictionary.Add(Start, Calculate(RPN, Start));
             }
             else
             {
-                for ( ; Start <= End; Start += Step)
+                for (; Start <= End; Start += Step)
                 {
                     answerDictionary.Add(Start, Calculate(RPN, Start));
                 }
