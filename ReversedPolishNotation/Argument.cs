@@ -8,7 +8,7 @@ namespace ReversedPolishNotation
 {
     public class Argument
     {
-        public string Name { get { return "x"; } }
+        public string Name => "x";
         public double Value { get; set; }
         public override string ToString()
         {
