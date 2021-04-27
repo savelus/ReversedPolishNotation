@@ -14,11 +14,12 @@ namespace ReversedPolishNotation
             
             string expression = GetExpression(out double start, out double  step, out double end);
             
-            double answer = 0;
             var rpn = new RPN();
-            string output = rpn.Reverse(expression, ref answer);
+            Stack<object> stackForCalculate = rpn.Reverse(expression, out string strRPN);
+            Console.WriteLine(strRPN);
+            var calculator = new Calculator(start, step, end);
+            Dictionary<double, double> answer= calculator.GetAnswer(stackForCalculate);
             
-            Console.WriteLine(output);
             Console.Read();
 
         }
@@ -28,8 +29,19 @@ namespace ReversedPolishNotation
             step = 0;
             end = 0;
             string[] file = File.ReadAllLines("input.txt");
-            if (file.Length == 4) Calculator.ParseArgumentData(new string[] { file[1], file[2], file[3] }, ref start, ref step, ref end);
-            else if (file.Length != 1 && file.Length != 4) throw new Exception("Данные введены неправильно.");
+            if (file.Length == 4)
+            {
+               if (!(double.TryParse(file[1], out start) 
+                    && (double.TryParse(file[2], out step)) 
+                    && (double.TryParse(file[3], out end))))
+               {
+                    throw new Exception("в строках 2-4 нельзя преобразовать числа");
+               }
+            }
+            if (file.Length != 1 && file.Length != 4)
+            {
+                throw new Exception("Неправильный ввод данных");
+            }
             return file[0];
         }
        

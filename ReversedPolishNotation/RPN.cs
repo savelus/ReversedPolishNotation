@@ -9,15 +9,14 @@ namespace ReversedPolishNotation
 {
     public class RPN
     {
-        public string Reverse (string expression, ref double answer)
+        public Stack<object> Reverse (string expression, out string strRPN)
         {
             expression = expression.Replace(" ", "");
             List<object> parsedLine = Parse(expression);
             CheckLine(parsedLine);//выбрасывать ошибку
-            var reversedLine = GetReversedLine(parsedLine);
-            return StringReversedLine(reversedLine.ToArray());
+            var reversedLine = GetReversedLine(parsedLine, out strRPN);
+            return reversedLine;
         } 
-        
         private List<object> Parse(string expression)
         {
             List<object> parsedLine = new List<object>();
@@ -35,7 +34,10 @@ namespace ReversedPolishNotation
                     parsedLine = ParseNumbers(ref tempNum, parsedLine);
                     parsedLine.Add(ChooseBracket(expression[i]));
                 }
-                else if (IsNumbers(expression[i]) || (".,".Contains(expression[i]) && IsNumbers(expression[i - 1]) && IsNumbers(expression[i + 1])))
+                else if (Char.IsDigit(expression[i]) 
+                        || (".,".Contains(expression[i]) 
+                            && Char.IsDigit(expression[i-1])
+                            && Char.IsDigit(expression[i+1])))
                 {
                     tempNum += expression[i].ToString();
                 }
@@ -56,10 +58,6 @@ namespace ReversedPolishNotation
                 tempNum = "";
             }
             return parsedLine;
-        }
-        private bool IsNumbers (char sym)
-        {         
-            return (sym >= '0' && sym <= '9');
         }
         private Operation ChooseOperation(char op)
         {
@@ -117,16 +115,16 @@ namespace ReversedPolishNotation
                 throw new Exception("некорректная строка");
             }
         } 
-        private Stack<object> GetReversedLine (List<object> parsedLine)
+        private Stack<object> GetReversedLine (List<object> parsedLine, out string strRPN)
         {
-            var outputStack = new Stack<object>();
+            var reverseStack = new Stack<object>();
             var operationsStack= new Stack<object>();
             int numberOfSymbol = 0;
             while (numberOfSymbol < parsedLine.Count())
             {
                 if (parsedLine[numberOfSymbol] is double || parsedLine[numberOfSymbol] is Argument)
                 {
-                    outputStack.Push(parsedLine[numberOfSymbol]);
+                    reverseStack.Push(parsedLine[numberOfSymbol]);
                     numberOfSymbol++;                     
                 }
                 else if (parsedLine[numberOfSymbol] is Bracket)
@@ -145,7 +143,7 @@ namespace ReversedPolishNotation
                         }
                         else 
                         {
-                            outputStack.Push(operationsStack.Pop());
+                            reverseStack.Push(operationsStack.Pop());
                         }
                     }
                 }
@@ -159,7 +157,7 @@ namespace ReversedPolishNotation
                     }
                     else
                     {
-                        outputStack.Push(operationsStack.Pop());
+                        reverseStack.Push(operationsStack.Pop());
                         operationsStack.Push(operation);
                         numberOfSymbol++;
                     }
@@ -167,10 +165,20 @@ namespace ReversedPolishNotation
             }
             while (operationsStack.Count != 0)
             {
-                outputStack.Push(operationsStack.Pop());
+                reverseStack.Push(operationsStack.Pop());
             }
-            return outputStack;
+            strRPN = StringReversedLine(reverseStack.ToArray());
+            return reverseStack;
         }
+        /* private Stack<object> GetStackforCalculation(Stack<object> reverseStack)
+         {
+             Stack<object> stackForCalculation = new Stack<object>();
+             while (reverseStack.Count != 0)
+             {
+                 stackForCalculation.Push(reverseStack.Pop());
+             }
+             return stackForCalculation;
+         }*/
         private string StringReversedLine (object[] reversedLine)
         {
             Array.Reverse(reversedLine);

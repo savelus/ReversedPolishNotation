@@ -46,6 +46,7 @@
     <Compile Include="Argument.cs" />
     <Compile Include="Bracket.cs" />
     <Compile Include="Calculator.cs" />
+    <Compile Include="ConsoleWriter.cs" />
     <Compile Include="Operation.cs" />
     <Compile Include="RPN.cs" />
     <Compile Include="Program.cs" />
