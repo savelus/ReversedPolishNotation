@@ -5,7 +5,7 @@ using System.Text;
 using System.Globalization;
 using System.Threading.Tasks;
 
-namespace ReversedPolishNotation
+namespace RPNLogic
 {
     public class RPN
     {

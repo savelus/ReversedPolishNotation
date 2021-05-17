@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ReversedPolishNotation
+namespace RPNLogic
 {
-    class Calculator
+    public class Calculator
     {
         public double Start { get; private set; }
         public double Step { get; private set; }
