@@ -13,15 +13,15 @@ namespace RPNLogic
         {
             expression = expression.Replace(" ", "");
             List<object> parsedLine = Parse(expression);
-            CheckLine(parsedLine);
+           // CheckLine(parsedLine);
             var reversedLine = GetReversedLine(parsedLine, out strRPN);
             return reversedLine;
-        } 
+        }
         private List<object> Parse(string expression)
         {
             List<object> parsedLine = new List<object>();
 
-            string tempNum = ""; 
+            string tempNum = "";
             for (int i = 0; i < expression.Length; i++)
             {
                 if ("+-*/".Contains(expression[i]))
@@ -34,20 +34,48 @@ namespace RPNLogic
                     parsedLine = ParseNumbers(ref tempNum, parsedLine);
                     parsedLine.Add(ChooseBracket(expression[i]));
                 }
-                else if (Char.IsDigit(expression[i]) 
-                        || (".,".Contains(expression[i]) 
-                            && Char.IsDigit(expression[i-1])
-                            && Char.IsDigit(expression[i+1])))
+                else if (Char.IsDigit(expression[i])
+                        || (".,".Contains(expression[i])
+                            && Char.IsDigit(expression[i - 1])
+                            && Char.IsDigit(expression[i + 1])))
                 {
                     tempNum += expression[i].ToString();
                 }
                 else if (char.IsLetter(expression[i]))
                 {
-                    parsedLine.Add(new Argument());
+                    if (expression[i] == 'x')
+                    {
+                        parsedLine.Add(new Argument());
+                    }
+                    else if ("sincostan".Contains(expression.Substring(i, 3)))
+                    {
+                        parsedLine.Add(GetTextOperation(expression.Substring(i, 3)));
+                        i += 2;
+                    }
+                    else
+                    {
+                        throw new Exception($"неопознанный символ {expression[i]} ") ; 
+                    } 
+                    
                 }
             }
             parsedLine = ParseNumbers(ref tempNum, parsedLine);
             return parsedLine;
+        }
+        private Operation GetTextOperation(string txtOperation)
+        {
+            switch (txtOperation)
+            {
+                case ("sin"):
+                    return new Sin();
+                case ("cos"):
+                    return new Cos();
+                case ("tan"):
+                    return new Tan();
+                default:
+                    throw new Exception($"Нет такой операции {txtOperation}");
+                    
+            }
         }
         private List<object> ParseNumbers (ref string tempNum, List<object> parsedLine)
         {

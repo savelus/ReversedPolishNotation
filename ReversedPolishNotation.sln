@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RPNLogic", "RPN.Logic\RPNLo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReversedPolishNotation", "ReversedPolishNotation\ReversedPolishNotation.csproj", "{98B33FCB-5B56-4942-92F9-305D6BD25A49}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RPNTests", "RPNTests\RPNTests.csproj", "{B1427A65-1B1F-4643-AC9E-90B71897EAC9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{98B33FCB-5B56-4942-92F9-305D6BD25A49}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{98B33FCB-5B56-4942-92F9-305D6BD25A49}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{98B33FCB-5B56-4942-92F9-305D6BD25A49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1427A65-1B1F-4643-AC9E-90B71897EAC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1427A65-1B1F-4643-AC9E-90B71897EAC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1427A65-1B1F-4643-AC9E-90B71897EAC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1427A65-1B1F-4643-AC9E-90B71897EAC9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
