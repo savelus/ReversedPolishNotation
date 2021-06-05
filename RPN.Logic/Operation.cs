@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace RPNLogic
 {
+    //Чем меньше приоритет тем раньше выполнем операцию
     public abstract class Operation
     {
         public abstract string Name { get; }
@@ -54,15 +55,22 @@ namespace RPNLogic
     public class Cos : Operation
     {
         public override string Name => "cos";
-        public override int CountParams => 2;
+        public override int CountParams => 1;
         public override double Calculate(double[] @params) { return Math.Cos(Math.PI * @params[0] / 180); }
         public override int Prior => 1;
     }
     public class Tan : Operation
     {
         public override string Name => "tan";
-        public override int CountParams => 2;
+        public override int CountParams => 1;
         public override double Calculate(double[] @params) { return Math.Tan(Math.PI * @params[0] / 180); }
+        public override int Prior => 1;
+    }
+    public class Per : Operation
+    {
+        public override string Name => "%";
+        public override int CountParams => 1;
+        public override double Calculate(double[] @params) { return @params[0]/100; }
         public override int Prior => 1;
     }
 

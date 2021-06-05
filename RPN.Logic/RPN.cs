@@ -24,7 +24,7 @@ namespace RPNLogic
             string tempNum = "";
             for (int i = 0; i < expression.Length; i++)
             {
-                if ("+-*/".Contains(expression[i]))
+                if ("+-*/%".Contains(expression[i]))
                 {
                     parsedLine = ParseNumbers(ref tempNum, parsedLine);
                     parsedLine.Add(ChooseOperation(expression[i]));
@@ -81,7 +81,7 @@ namespace RPNLogic
         {
             if (tempNum != "")
             {
-                double number = double.Parse(tempNum, CultureInfo.InvariantCulture); //7,5 => 75  7.5 => 7.5
+                double number = double.Parse(tempNum);
                 parsedLine.Add(number);
                 tempNum = "";
             }
@@ -92,6 +92,9 @@ namespace RPNLogic
             Operation operation = null;
             switch (op)
             {
+                case ('%'):
+                    operation = new Per();
+                    break;
                 case ('+'):
                     operation = new Plus();
                     break;
