@@ -204,7 +204,6 @@ namespace RPNLogic
         private string StringReversedLine (object[] reversedLine)
         {
             Array.Reverse(reversedLine);
-            int countSymbolinStack = reversedLine.Length;
             StringBuilder @string = new StringBuilder();
             foreach (var element in reversedLine)
             {
