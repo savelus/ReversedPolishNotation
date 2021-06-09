@@ -17,11 +17,8 @@ namespace ReversedPolishNotation
             string expression = GetExpression(out double start, out double step, out double end);
 
             var rpn = new RPN();
-            Stack<object> stackForCalculate = rpn.Reverse(expression, out string strRPN);
-            var calculator = new Calculator(start, step, end);
-            Dictionary<double, double> answer = calculator.GetAnswer(stackForCalculate);
-            ConsoleWriter.OutData(expression, strRPN, answer);
-
+            var answerDictionary = rpn.GetAnswer(expression, out string strRPN, start, step, end);
+            ConsoleWriter.OutData(expression, strRPN, answerDictionary);
         }
         private static string GetExpression(out double start, out double step, out double end)
         {

@@ -21,7 +21,7 @@ namespace RPNLogic
             Step = step;
             End = end;
         }
-        public Dictionary<double, double> GetAnswer(Stack<object> RPN)
+        public Dictionary<double, double> GetDictionary(Stack<object> RPN)
         {
 
             var answerDictionary = new Dictionary<double, double>();
