@@ -20,34 +20,39 @@ namespace testWPF
     /// </summary>
     public partial class MainWindow : Window
     {
+        private List<string> Clicks = new List<string>();
+        public string TextExpression { get; private set; }
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        private void NumberButton_Click(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            TBAnswer.Text += ((Button)sender).Content;
+            string LastClick = (string)((Button)sender).Content;
+            Clicks.Add(LastClick);
+            CreateTextExpression();
+        }
+        private void ClearButton_Click(object sender, RoutedEventArgs e)
+        {
+            Clicks.RemoveAt(Clicks.Count - 1);
+            CreateTextExpression();
+        }
+        private void AllClearButton_Click(object sender, RoutedEventArgs e)
+        {
+            Clicks.Clear();
+            CreateTextExpression();
+        }
+        
+        private void CalculateButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
 
-        private void OperationButton_Click(object sender, RoutedEventArgs e)
+        private void CreateTextExpression()
         {
-
-        }
-
-        private void FunctionButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void ArgumentButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void BracketButton_Click(object sender, RoutedEventArgs e)
-        {
-
+            TextExpression = string.Join("", Clicks);
+            TBExpression.Text = TextExpression;
         }
     }
 }

@@ -52,32 +52,32 @@
         </Grid.ColumnDefinitions>
         <Grid Grid.Row="0" Grid.ColumnSpan="5">
             <Rectangle Fill="#FFC6E7E8" RadiusX="15" RadiusY="15" Margin="3"/>
-            <TextBlock x:Name="TBAnswer"  Grid.Row="0" Grid.ColumnSpan="4" Margin="5,5,5,5" FontSize="30"/>
+            <TextBlock x:Name="TBExpression"  Grid.Row="0" Grid.ColumnSpan="4" Margin="5,5,5,5" FontSize="20"/>
         </Grid>
-        <Button Style ="{StaticResource numberButton}" Grid.Column="0" Grid.Row="1" Click="NumberButton_Click">1</Button>
-        <Button Style ="{StaticResource numberButton}" Grid.Column="1" Grid.Row="1" Click="NumberButton_Click">2</Button>
-        <Button Style ="{StaticResource numberButton}" Grid.Column="2" Grid.Row="1" Click="NumberButton_Click">3</Button>
-        <Button Style ="{StaticResource numberButton}" Grid.Column="0" Grid.Row="2" Click="NumberButton_Click">4</Button>
-        <Button Style ="{StaticResource numberButton}" Grid.Column="1" Grid.Row="2" Click="NumberButton_Click">5</Button>
-        <Button Style ="{StaticResource numberButton}" Grid.Column="2" Grid.Row="2" Click="NumberButton_Click">6</Button>
-        <Button Style ="{StaticResource numberButton}" Grid.Column="0" Grid.Row="3" Click="NumberButton_Click">7</Button>
-        <Button Style ="{StaticResource numberButton}" Grid.Column="1" Grid.Row="3" Click="NumberButton_Click">8</Button>
-        <Button Style ="{StaticResource numberButton}" Grid.Column="2" Grid.Row="3" Click="NumberButton_Click">9</Button>
-        <Button Style ="{StaticResource numberButton}" Grid.Column="0" Grid.Row="4" Click="NumberButton_Click">0</Button>
-        <Button Style ="{StaticResource numberButton}" Grid.Column="1" Grid.Row="4" Click="NumberButton_Click">,</Button>
-        <Button Style ="{StaticResource numberButton}" Grid.Column="2" Grid.Row="4" Click="ArgumentButton_Click">x</Button>
-        <Button Style ="{StaticResource operationButton}" Grid.Column="3" Grid.Row="5" Click="BracketButton_Click">(</Button>
-        <Button Style ="{StaticResource operationButton}" Grid.Column="4" Grid.Row="5" Click="BracketButton_Click">)</Button>
-        <Button Style ="{StaticResource operationButton}" Grid.Column="3" Grid.Row="4" Click="OperationButton_Click">+</Button>
-        <Button Style ="{StaticResource operationButton}" Grid.Column="4" Grid.Row="4" Click="OperationButton_Click">-</Button>
-        <Button Style ="{StaticResource operationButton}" Grid.Column="3" Grid.Row="3" Click="OperationButton_Click">*</Button>
-        <Button Style ="{StaticResource operationButton}" Grid.Column="4" Grid.Row="3" Click="OperationButton_Click">/</Button>
-        <Button Style ="{StaticResource operationButton}" Grid.Column="3" Grid.Row="1" Click="OperationButton_Click">sin</Button>
-        <Button Style ="{StaticResource operationButton}" Grid.Column="4" Grid.Row="1" Click="OperationButton_Click">cos</Button>
-        <Button Style ="{StaticResource operationButton}" Grid.Column="3" Grid.Row="2" Click="OperationButton_Click">tan</Button>
-        <Button Style ="{StaticResource operationButton}" Grid.Column="4" Grid.Row="2" Click="OperationButton_Click">%</Button>
-        <Button Style ="{StaticResource functionalButton}" Grid.Column="0" Grid.Row="5" Click="FunctionButton_Click">C</Button>
-        <Button Style ="{StaticResource functionalButton}" Grid.Column="1" Grid.Row="5" Click="FunctionButton_Click">AC</Button>
-        <Button Style ="{StaticResource functionalButton}" Grid.Column="2" Grid.Row="5" Click="FunctionButton_Click">Calc</Button>
+        <Button Style ="{StaticResource numberButton}" Grid.Column="0" Grid.Row="1" Click="Button_Click">1</Button>
+        <Button Style ="{StaticResource numberButton}" Grid.Column="1" Grid.Row="1" Click="Button_Click">2</Button>
+        <Button Style ="{StaticResource numberButton}" Grid.Column="2" Grid.Row="1" Click="Button_Click">3</Button>
+        <Button Style ="{StaticResource numberButton}" Grid.Column="0" Grid.Row="2" Click="Button_Click">4</Button>
+        <Button Style ="{StaticResource numberButton}" Grid.Column="1" Grid.Row="2" Click="Button_Click">5</Button>
+        <Button Style ="{StaticResource numberButton}" Grid.Column="2" Grid.Row="2" Click="Button_Click">6</Button>
+        <Button Style ="{StaticResource numberButton}" Grid.Column="0" Grid.Row="3" Click="Button_Click">7</Button>
+        <Button Style ="{StaticResource numberButton}" Grid.Column="1" Grid.Row="3" Click="Button_Click">8</Button>
+        <Button Style ="{StaticResource numberButton}" Grid.Column="2" Grid.Row="3" Click="Button_Click">9</Button>
+        <Button Style ="{StaticResource numberButton}" Grid.Column="0" Grid.Row="4" Click="Button_Click">0</Button>
+        <Button Style ="{StaticResource numberButton}" Grid.Column="1" Grid.Row="4" Click="Button_Click">,</Button>
+        <Button Style ="{StaticResource numberButton}" Grid.Column="2" Grid.Row="4" Click="Button_Click">x</Button>
+        <Button Style ="{StaticResource operationButton}" Grid.Column="3" Grid.Row="5" Click="Button_Click">(</Button>
+        <Button Style ="{StaticResource operationButton}" Grid.Column="4" Grid.Row="5" Click="Button_Click">)</Button>
+        <Button Style ="{StaticResource operationButton}" Grid.Column="3" Grid.Row="4" Click="Button_Click">+</Button>
+        <Button Style ="{StaticResource operationButton}" Grid.Column="4" Grid.Row="4" Click="Button_Click">-</Button>
+        <Button Style ="{StaticResource operationButton}" Grid.Column="3" Grid.Row="3" Click="Button_Click">*</Button>
+        <Button Style ="{StaticResource operationButton}" Grid.Column="4" Grid.Row="3" Click="Button_Click">/</Button>
+        <Button Style ="{StaticResource operationButton}" Grid.Column="3" Grid.Row="1" Click="Button_Click">sin</Button>
+        <Button Style ="{StaticResource operationButton}" Grid.Column="4" Grid.Row="1" Click="Button_Click">cos</Button>
+        <Button Style ="{StaticResource operationButton}" Grid.Column="3" Grid.Row="2" Click="Button_Click">tan</Button>
+        <Button Style ="{StaticResource operationButton}" Grid.Column="4" Grid.Row="2" Click="Button_Click">%</Button>
+        <Button Style ="{StaticResource functionalButton}" Grid.Column="0" Grid.Row="5" Click="ClearButton_Click">C</Button>
+        <Button Style ="{StaticResource functionalButton}" Grid.Column="1" Grid.Row="5" Click="AllClearButton_Click">AC</Button>
+        <Button Style ="{StaticResource functionalButton}" Grid.Column="2" Grid.Row="5" Click="CalculateButton_Click">Calc</Button>
     </Grid>
 </Window>
