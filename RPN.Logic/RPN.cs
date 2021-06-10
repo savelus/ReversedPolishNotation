@@ -10,11 +10,11 @@ namespace RPNLogic
 {
     public class RPN
     {
-        public Dictionary<double, double> GetAnswer (string expression, out string strRPN, double start, double step, double end)
+        public Dictionary<double, double> GetAnswer(string expression, out string strRPN, double start, double step, double end)
         {
             expression = expression.Replace(" ", "");
             List<object> parsedLine = Parse(expression);
-           // CheckLine(parsedLine);
+
             var reversedLine = GetReversedLine(parsedLine, out strRPN);
             var calculator = new Calculator(start, step, end);
             return calculator.GetDictionary(reversedLine);
@@ -56,9 +56,8 @@ namespace RPNLogic
                     }
                     else
                     {
-                        throw new Exception($"неопознанный символ {expression[i]} ") ; 
-                    } 
-                    
+                        throw new Exception($"неопознанный символ {expression[i]} ");
+                    }
                 }
             }
             parsedLine = ParseNumbers(ref tempNum, parsedLine);

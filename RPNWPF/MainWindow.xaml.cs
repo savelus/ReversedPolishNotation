@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using RPNLogic;
 
 namespace testWPF
 {
@@ -35,7 +36,10 @@ namespace testWPF
         }
         private void ClearButton_Click(object sender, RoutedEventArgs e)
         {
-            Clicks.RemoveAt(Clicks.Count - 1);
+            if (Clicks.Count !=0)
+            {
+                Clicks.RemoveAt(Clicks.Count - 1);
+            }
             CreateTextExpression();
         }
         private void AllClearButton_Click(object sender, RoutedEventArgs e)
@@ -46,7 +50,18 @@ namespace testWPF
         
         private void CalculateButton_Click(object sender, RoutedEventArgs e)
         {
+            var answer = new Dictionary<double, double>();
+            var rpn = new RPN();
+            if (TextExpression.Contains('x'))
+            {
 
+            }
+            else
+            {
+                answer = rpn.GetAnswer(TextExpression, out string strRPN, 0, 0, 0);
+                TextExpression += $" = {answer[0]}";
+                TBExpression.Text = TextExpression;
+            }
         }
 
         private void CreateTextExpression()
