@@ -5,17 +5,19 @@ using System.Text;
 using System.Globalization;
 using System.Threading.Tasks;
 
+
 namespace RPNLogic
 {
     public class RPN
     {
-        public Stack<object> Reverse (string expression, out string strRPN)
+        public Dictionary<double, double> GetAnswer (string expression, out string strRPN, double start, double step, double end)
         {
             expression = expression.Replace(" ", "");
             List<object> parsedLine = Parse(expression);
            // CheckLine(parsedLine);
             var reversedLine = GetReversedLine(parsedLine, out strRPN);
-            return reversedLine;
+            var calculator = new Calculator(start, step, end);
+            return calculator.GetDictionary(reversedLine);
         }
         private List<object> Parse(string expression)
         {
