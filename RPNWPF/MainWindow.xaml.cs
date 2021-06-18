@@ -14,7 +14,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using RPNLogic;
 
-namespace testWPF
+
+namespace RPNWPF
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -54,7 +55,11 @@ namespace testWPF
             var rpn = new RPN();
             if (TextExpression.Contains('x'))
             {
+                Graph graph = new Graph(TextExpression);
 
+                graph.Topmost = true;
+                graph.Show();
+                graph.Setpoints();
             }
             else
             {
