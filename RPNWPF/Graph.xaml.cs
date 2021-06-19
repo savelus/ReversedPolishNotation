@@ -17,6 +17,7 @@ namespace RPNWPF
     /// </summary>
     public partial class Graph : Window
     {
+        private double zoom = 1;
         FunctionDrawer drawer;
         public Graph(string function)
         {
@@ -28,13 +29,26 @@ namespace RPNWPF
         public void Setpoints()
         {
             MainCanvas.Children.Clear();
-            drawer.Drawfunction(5);
+            drawer.Drawfunction(zoom);
         }
 
         private void MainCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             MainCanvas.Width = this.Width;
             MainCanvas.Height = this.Height;
+            Setpoints();
+        }
+
+        private void MainCanvas_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (e.Delta > 0)
+            {
+                zoom *=1.5;
+            }
+            else
+            {
+                zoom /= 1.5;
+            }
             Setpoints();
         }
     }

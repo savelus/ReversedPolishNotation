@@ -5,9 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RPNWPF"
         mc:Ignorable="d"
-        Title="Window1" Height="450" Width="800" 
-        SizeChanged="MainCanvas_SizeChanged">
+        Title="Window1" Height="600" Width="600"
+        SizeChanged="MainCanvas_SizeChanged"
+        >
     
-    <Canvas x:Name="MainCanvas" Background="AliceBlue"/>
+    <Canvas x:Name="MainCanvas" Background="AliceBlue" MouseWheel="MainCanvas_MouseWheel" Height="600" Width="600" />
 
 </Window>
