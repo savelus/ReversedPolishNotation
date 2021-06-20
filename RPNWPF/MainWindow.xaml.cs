@@ -59,7 +59,6 @@ namespace RPNWPF
 
                 graph.Topmost = true;
                 graph.Show();
-                graph.Setpoints();
             }
             else
             {

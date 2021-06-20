@@ -12,13 +12,12 @@ using System.Windows.Shapes;
 
 namespace RPNWPF
 {
-    /// <summary>
-    /// Логика взаимодействия для Window1.xaml
-    /// </summary>
     public partial class Graph : Window
     {
+        private Point delta = new Point(0, 0);
         private double zoom = 1;
         FunctionDrawer drawer;
+        
         public Graph(string function)
         {
 
@@ -26,30 +25,71 @@ namespace RPNWPF
             drawer = new FunctionDrawer(function, MainCanvas);
             
         }
-        public void Setpoints()
+        private void Draw()
         {
             MainCanvas.Children.Clear();
-            drawer.Drawfunction(zoom);
+            drawer.Drawfunction(zoom, delta);
         }
 
         private void MainCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             MainCanvas.Width = this.Width;
-            MainCanvas.Height = this.Height;
-            Setpoints();
+            MainCanvas.Height = this.Height - 150;
+            Draw();
         }
 
         private void MainCanvas_MouseWheel(object sender, MouseWheelEventArgs e)
         {
             if (e.Delta > 0)
             {
-                zoom *=1.5;
+                if (zoom > 200) { }
+                if (zoom < 2)
+                    zoom += 0.1;
+                else
+                    zoom +=1;
             }
             else
             {
-                zoom /= 1.5;
+                if (zoom > 2)
+                    zoom -= 1;
+                else if (zoom > 0.1)
+                    zoom -= 0.1;
             }
-            Setpoints();
+            Zoom.Text = Math.Round(zoom, 2) .ToString();
+            Draw();
+        }
+
+        private void MainCanvas_KeyDown(object sender, KeyEventArgs e)
+        {
+            delta.X = 0;
+            delta.Y = 0;
+            switch (e.Key)
+            {
+                case Key.Up:
+                    delta.Y = -5;
+
+                    break;
+                case Key.Down:
+                    delta.Y = 5;
+                    break;
+                case Key.Left:
+                    delta.X = 5;
+                    break;
+                case Key.Right:
+                    delta.X = -5;
+                    break;
+                default:
+                    break;
+            }
+            Draw();
+        }
+
+        private void Window_MouseMove(object sender, MouseEventArgs e)
+        {
+            Point mousePos = e.GetPosition(MainCanvas);
+            Point origin = drawer.GetPoint();
+            Xcoord.Text = Math.Round((mousePos.X - origin.X) / zoom, 3).ToString();
+            Ycoord.Text = Math.Round((origin.Y - mousePos.Y) / zoom, 3).ToString();
         }
     }
 }

@@ -5,10 +5,37 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RPNWPF"
         mc:Ignorable="d"
-        Title="Window1" Height="600" Width="600"
+        Title="Window1" Height="700" Width="600"
         SizeChanged="MainCanvas_SizeChanged"
-        >
-    
-    <Canvas x:Name="MainCanvas" Background="AliceBlue" MouseWheel="MainCanvas_MouseWheel" Height="600" Width="600" />
+        Keyboard.KeyDown="MainCanvas_KeyDown"
+        Mouse.MouseMove="Window_MouseMove">
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="25"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+        
+    </Window.Resources>
+    <Grid >
+        <Grid x:Name="GProperties" Height="100" Width="600" VerticalAlignment="Top" >
+            <Grid.ColumnDefinitions >
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Zoom:"/>
+            <TextBlock Grid.Row="0" Grid.Column="1" Text="X:"/>
+            <TextBlock Grid.Row="0" Grid.Column="2" Text="Y:"/>
 
+            <TextBlock x:Name="Zoom" Grid.Row="1" Grid.Column="0" />
+            <TextBlock x:Name="Xcoord" Grid.Row="1" Grid.Column="1" />
+            <TextBlock x:Name="Ycoord" Grid.Row="1" Grid.Column="2" />
+        </Grid> 
+            <Canvas x:Name="MainCanvas"  VerticalAlignment="Bottom" Background="AliceBlue" MouseWheel="MainCanvas_MouseWheel" Height="600" Width="600" />
+    </Grid>
 </Window>

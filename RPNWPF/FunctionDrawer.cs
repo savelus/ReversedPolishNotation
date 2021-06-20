@@ -31,26 +31,30 @@ namespace RPNWPF
         private Brush axisColor = Brushes.Black;
         private Brush pointColor = Brushes.Red;
 
-        public void Drawfunction(double scale)
+
+        public void Drawfunction(double zoom, Point delta)
         {
+            origin.X += delta.X;
+            origin.Y += delta.Y;
             DrawAxes();
             var rpn = new RPN();
+            double step = 1 / zoom;
             Point? startPoint = null;
-            Dictionary<double, double> answerRPN = rpn.GetAnswer(Function, out _, -origin.X, 0.5, canvas.Width - origin.X);
-            for (double i = -origin.X; i < canvas.Width - origin.X; i+=0.5)
+            Dictionary<double, double> answerRPN = rpn.GetAnswer(Function, out _, -origin.X * step, step, (canvas.Width - origin.X) * step);
+            for (double i = -origin.X * step; i < (canvas.Width - origin.X) * step; i+=step)
             {
-                if (answerRPN[i] < origin.Y || answerRPN[i] > canvas.Height)
+                if (!Double.IsInfinity(answerRPN[i]))//answerRPN[i] < origin.Y || answerRPN[i] > canvas.Height)
                 {
                     if (startPoint != null)
                     {
                         var startEndPoint = new PointCollection()
                         { 
                             startPoint.Value,
-                            new Point(i + origin.X, -answerRPN[i] + origin.Y)
+                            new Point(i* zoom + origin.X,-answerRPN[i] * zoom + origin.Y)
                         };
                         DrawLine(startEndPoint[0], startEndPoint[1], lineColor);
                     }
-                    startPoint = new Point(i + origin.X, -answerRPN[i] + origin.Y);
+                    startPoint = new Point(i * zoom + origin.X, -answerRPN[i] * zoom + origin.Y);
                 }
                 else
                 {
@@ -83,11 +87,21 @@ namespace RPNWPF
                 new Point(origin.X - 4, 8),
                 new Point(origin.X + 4, 8)
             };
+
             DrawLine(OX[0], OX[1], axisColor);
             DrawArrows(OXArrows);
             DrawLine(OY[0], OY[1], axisColor);
             DrawArrows(OYArrows);
         }
+
+        private void DrawArrows(PointCollection tops)
+        {
+            Polygon polygon = new Polygon();
+            polygon.Points = tops;
+            polygon.Fill = axisColor;
+            canvas.Children.Insert(0, polygon);
+        }
+        #endregion
 
         private void DrawLine(Point start, Point end, Brush color)
         {
@@ -103,14 +117,9 @@ namespace RPNWPF
                 canvas.Children.Insert(0, line);
             }
         }
-
-        private void DrawArrows(PointCollection tops)
+        public Point GetPoint()
         {
-            Polygon polygon = new Polygon();
-            polygon.Points = tops;
-            polygon.Fill = axisColor;
-            canvas.Children.Insert(0, polygon);
+            return new Point(origin.X, origin.Y);
         }
-        #endregion
     }
 }
